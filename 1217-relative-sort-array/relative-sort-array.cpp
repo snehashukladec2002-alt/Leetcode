@@ -1,33 +1,29 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+        vector<int> freq(1001, 0);
+        
+        // Count frequency of every element
+        for (int x : arr1) {
+            freq[x]++;
+        }
+        
         vector<int> ans;
         
-        // Step 1: Elements present in arr2
-        for (int i = 0; i < arr2.size(); i++) {
-            for (int j = 0; j < arr1.size(); j++) {
-                if (arr1[j] == arr2[i]) {
-                    ans.push_back(arr1[j]);
-                    arr1[j] = -1;   // mark as used
-                }
+        // Put elements according to arr2
+        for (int x : arr2) {
+            while (freq[x] > 0) {
+                ans.push_back(x);
+                freq[x]--;
             }
         }
         
-        // Step 2: Remaining elements
-        vector<int> remaining;
-        
-        for (int i = 0; i < arr1.size(); i++) {
-            if (arr1[i] != -1) {
-                remaining.push_back(arr1[i]);
+        // Put remaining elements in increasing order
+        for (int x = 0; x <= 1000; x++) {
+            while (freq[x] > 0) {
+                ans.push_back(x);
+                freq[x]--;
             }
-        }
-        
-        // Step 3: Sort remaining elements
-        sort(remaining.begin(), remaining.end());
-        
-        // Step 4: Add them to answer
-        for (int x : remaining) {
-            ans.push_back(x);
         }
         
         return ans;
