@@ -6,7 +6,7 @@ stack<int> helper;
         
     }
     
-    void push(int x) {
+    void push(int x) {//O(n)
         st.push(x);
 
         
